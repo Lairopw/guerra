@@ -1,5 +1,5 @@
 # guerra
 
-Jules= la partie gauche \n
-Loris= la partie droite
+Jules= la partie gauche <br>
+Loris= la partie droite;
 Vincent= Login, Signin, main et bdd
