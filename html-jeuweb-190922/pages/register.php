@@ -55,11 +55,17 @@ if(isset($_SESSION['token'])){
               break;
             break;
           case '5':
-              $msg = "Cet utilisateur est déjà prit ou vous possedez déjà un compte avec cette IP.";
+              $msg = "Cet email est déjà pris petit coquin va";
               break;
           case '6':
               $msg = "Le formulaire n'est pas rempli.";
               break;
+          case '7':
+            $msg = "cheh la couleur est déjà prise";
+            break;
+          case '8':
+            $msg = "ton pseudo est pas original retry";
+            break;
       }
     }
     if(isset($_GET['res'])){

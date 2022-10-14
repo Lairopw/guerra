@@ -12,14 +12,14 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
     $data = $check->fetch();
     $row = $check->rowCount();
 
-    if($row < 1){ header('Location: /?page=login&res=3'); die();}
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ header('Location: /?page=login&res=2'); die();}
-    if(!password_verify($password, $data['password'])){ header('Location: /?page=login&res=1'); die();}
+    if($row < 1){ header('Location: /?page=register&res=3'); die();}
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ header('Location: /?page=register&res=2'); die();}
+    if(!password_verify($password, $data['password'])){ header('Location: /?page=register&res=1'); die();}
     $_SESSION['token'] = $data['token'];
     $_SESSION['id'] = $data['id'];
     header('Location: /');
     die();           
     
-}else{ header('Location: /?page=login&res=4'); die();}
+}else{ header('Location: /?page=register&res=4'); die();}
 
 ?>

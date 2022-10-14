@@ -12,13 +12,26 @@ if(!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['passwor
 
     $check = $bdd->prepare('SELECT id FROM players WHERE email = ? OR pseudo = ? OR ip = ?');
     $check->execute(array($email,$pseudo,$ip));
+    $col = $bdd->prepare('SELECT color FROM players,players_stats WHERE players.id=players_stats.player_id');
+    $col->execute(array($ip));
+    $colo=$col->fetch();
+    $mail = $bdd->prepare('SELECT email FROM players WHERE email=?');
+    $mail->execute(array($email));
+    $test=$mail->fetch();
+    $count=$mail->rowCount();
+    $pse = $bdd->prepare('SELECT pseudo FROM players WHERE pseudo=?');
+    $pse->execute(array($pseudo));
+    $on=$pse->fetch();
+    $cd=$pse->rowCount();
     $data = $check->fetch();
     $row = $check->rowCount();
     
-    if(!$row == 0){ header('Location: /?page=register&res=5');die();}
+    if($count > 0){ header('Location: /?page=register&res=5');die();}
+    if($cd > 0){ header('Location: /?page=register&res=8');die();}
     if(strlen($pseudo) > 100){ header('Location: /?page=register&res=4'); die();}
     if(strlen($email) > 100){ header('Location: /?page=register&res=3'); die();}
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ header('Location: /?page=register&res=2'); die();}
+    if($color==$colo["color"]){ header('Location: /?page=register&res=7'); die();}
     if(!$password === $password_retype){ header('Location: /?page=register&res=1'); die();}
 
     $cost = ['cost' => 12];

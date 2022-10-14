@@ -4,6 +4,7 @@
     }
 ?>
 
+?>
 <style>
   body{
     background-color: gray;
@@ -20,14 +21,14 @@
   }
   #screen-left{
     position: absolute;
-    top: 165px;
+    top: 100px;
     left: calc((100% - 1900px) / 2);
     position: fixed;
-    background-color: linear-gradient(purple,blue);
+    background: linear-gradient(purple,blue);
     border-radius: 1rem;
-    border: 5px solid blue;
+    border: 10px solid blue;
     width: 200px;
-    height: 712px;
+    height: 800px;
   }
   #screen{
     position: absolute;
@@ -76,53 +77,82 @@
     <div class="row">
       <button class="bg-danger">
         <u><b>Industrie</b></u><br>
-        possédé:<br>
-        
-        <br>
+        possédé:
+        <?php
+          $req = $bdd->prepare('SELECT crea_indu FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["crea_indu"]);
+            ?>
+          </p>
         Coût:<br>
         - 200 d'industrie<br>
         - 10 d'énergie
       </button>
     </div>
     <div class="row">
-      <button class="bg-info">
+      <button class="bg-info"  method="post">
         <u><b>Centrale</b></u><br>
-        possédé:<br>
+        possédé:
         <?php
-          $req = $bdd->prepare('SELECT central FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req = $bdd->prepare('SELECT centrale FROM players,players_stats WHERE players.id=players_stats.player_id');
           $req->execute(array($_SESSION['id'])); 
           $test = $req->fetch();?>
-          <div class="text">
+          <p>
             <?php 
-              echo $test;
+              echo($test["centrale"]);
             ?>
-          </div>
-        <br>
+          </p>
         Coût:<br>
         - 200 d'industrie<br>
         - 20 d'énergie
       </button>
     </div>
     <div class="row">
-      <button class="bg-primary">
+      <button class="bg-primary" method="post">
         <u><b>Canon</b></u><br>
-        possédé:<br>
-        <br>
+        possédé:
+        <?php
+          $req = $bdd->prepare('SELECT canon FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["canon"]);
+            ?>
+          </p>
         Coût:<br>
         - 15 d'industrie<br>
         - 2 d'énergie
       </button>
-      <button class="bg-primary">
+      <button class="bg-primary" method="post">
         <u><b>troupe offensive</b></u><br>
-        possédé:<br>
-        <br>
+        possédé:<?php
+          $req = $bdd->prepare('SELECT troupe_offensive FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["troupe_offensive"]);
+            ?>
+          </p>
         Coût:<br>
         - 10 d'industrie<br>
       </button>
-      <button class="bg-primary">
+      <button class="bg-primary" method="post">
         <u><b>troupe logistique</b></u><br>
-        possédé:<br>
-        <br>
+        possédé:
+        <?php
+          $req = $bdd->prepare('SELECT troupe_logistique FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["troupe_logistique"]);
+            ?>
+          </p>
         Coût:<br>
         - 10 d'industrie<br>
       </button>
