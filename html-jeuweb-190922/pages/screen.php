@@ -4,7 +4,11 @@
     }
 ?>
 
-?>
+<?php
+    $req = $bdd->prepare('UPDATE players_stats SET crea_indu=crea_indu+ 1, industrie=industrie-200, energie=energie-10');
+    $req->execute(array());
+  ?>
+
 <style>
   body{
     background-color: gray;
@@ -75,8 +79,8 @@
 <div id="screen-left" class="container">
   <div class="col">
     <div class="row">
-      <button class="bg-danger">
-        <u><b>Industrie</b></u><br>
+      <div class="bg-danger">
+      <u><b>Industrie</b></u><br>
         possédé:
         <?php
           $req = $bdd->prepare('SELECT crea_indu FROM players,players_stats WHERE players.id=players_stats.player_id');
@@ -90,8 +94,33 @@
         Coût:<br>
         - 200 d'industrie<br>
         - 10 d'énergie
-      </button>
-    </div>
+
+      <form method="post">
+        <input type="submit" name="button1"
+                class="button" value="test" />
+      </form>
+</div>
+<div class="bg-info">
+      <u><b>cenral</b></u><br>
+        possédé:
+        <?php
+          $req = $bdd->prepare('SELECT centrale FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["centrale"]);
+            ?>
+          </p>
+        Coût:<br>
+        - 200 d'industrie<br>
+        - 10 d'énergie
+
+      <form method="post">
+        <input type="submit" name="button2"
+                class="button" value="test" />
+      </form>
+</div><!--
     <div class="row">
       <button class="bg-info"  method="post">
         <u><b>Centrale</b></u><br>
@@ -145,17 +174,17 @@
         <u><b>troupe logistique</b></u><br>
         possédé:
         <?php
-          $req = $bdd->prepare('SELECT troupe_logistique FROM players,players_stats WHERE players.id=players_stats.player_id');
-          $req->execute(array($_SESSION['id'])); 
-          $test = $req->fetch();?>
+          #$req = $bdd->prepare('SELECT troupe_logistique FROM players,players_stats WHERE players.id=players_stats.player_id');
+          #$req->execute(array($_SESSION['id'])); 
+          #$test = $req->fetch();?>
           <p>
             <?php 
-              echo($test["troupe_logistique"]);
-            ?>
+            #  echo($test["troupe_logistique"]);
+            #?>
           </p>
         Coût:<br>
         - 10 d'industrie<br>
-      </button>
+      </button>-->
     </div>
   </div>
 </div>
