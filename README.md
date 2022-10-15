@@ -12,6 +12,6 @@ $req->execute(array($_SESSION['id']));
 Liste de trucs a faire :
 
 - Cron
-- Récup des résultats de la partie de droite et mise en BDD
+- Récup des résultats de la partie de droite et mise en BDD = CHECK
 - Barre du haut mais tkt 
 - Partie de Gauche ???
