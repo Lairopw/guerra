@@ -4,10 +4,7 @@
     }
 ?>
 
-<?php
-    $req = $bdd->prepare('UPDATE players_stats SET crea_indu=crea_indu+ 1, industrie=industrie-200, energie=energie-10');
-    $req->execute(array());
-  ?>
+
 
 <style>
   body{
@@ -27,12 +24,12 @@
     position: absolute;
     top: 100px;
     left: calc((100% - 1900px) / 2);
-    position: fixed;
+    position: flex;
     background: linear-gradient(purple,blue);
     border-radius: 1rem;
     border: 10px solid blue;
     width: 200px;
-    height: 800px;
+    height: 869px;
   }
   #screen{
     position: absolute;
@@ -67,15 +64,30 @@
     height: 3px;
   }
 </style>
-<div id="info">
-</div>
 <script>
   var infodiv = document.getElementById("info");
-  function setInfo(name, x, y)
+  function setInfo(name, x, y, energie,industrie)
   {
-    infodiv.innerHTML = name + "<br />X: " + x + "<br />Y: " + y;
+    infodiv.innerHTML = name + "                        <br />X: " + x + "                            <br />Y: " + y +"                     <br/> energie:"+energie+"                               <br/> industrie: "+industrie;
   }
 </script>
+<div id="info">
+<?php
+  $req = $bdd->prepare('SELECT pseudo,x_coord,y_coord,color,energie,industrie FROM players,players_stats WHERE players.id=players_stats.player_id');
+  $req->execute(array($_SESSION['id']));
+  $data = $req->fetch();
+  $pse=$data["pseudo"];
+  $x_co=$data["x_coord"];
+  $y_co=$data["y_coord"];
+  $indu=$data["industrie"];
+  $ener=$data["energie"];?>
+  <div >
+    <?php
+      echo "pseudo :",$pse,"<br>   X : ", $x_co ," , Y : ", $y_co ,"<br>  industrie : ", $indu ," <br>  energie : ", $ener;
+    ?>
+  </div>
+</div>
+
 <div id="screen-left" class="container">
   <div class="col">
     <div class="row">
@@ -94,14 +106,20 @@
         Coût:<br>
         - 200 d'industrie<br>
         - 10 d'énergie
-
+      
       <form method="post">
         <input type="submit" name="button1"
                 class="button" value="test" />
       </form>
+      <?php
+      $t= '<script type="text/javascript">.document.getElementById("button1"); </script>' ;
+      if(isset($t)){
+        $req = $bdd->prepare('UPDATE players_stats SET crea_indu=crea_indu+ 1, industrie=industrie-200, energie=energie-10 WHERE WHERE players.id=players_stats.player_id');
+        $req->execute(array($_SESSION['id']));}
+      ?>
 </div>
-<div class="bg-info">
-      <u><b>cenral</b></u><br>
+<div class="bg-primary">
+      <u><b>central</b></u><br>
         possédé:
         <?php
           $req = $bdd->prepare('SELECT centrale FROM players,players_stats WHERE players.id=players_stats.player_id');
@@ -115,12 +133,75 @@
         Coût:<br>
         - 200 d'industrie<br>
         - 10 d'énergie
-
+        
       <form method="post">
         <input type="submit" name="button2"
-                class="button" value="test" />
+                class="button" value="test 2" />
       </form>
-</div><!--
+      <?php
+        $te= '<script type="text/javascript">.document.getElementById("button2"); </script>' ;
+        if(isset($te)){
+    $req = $bdd->prepare('UPDATE players_stats SET centrale=centrale+ 1, industrie=industrie-200, energie=energie-10 WHERE players.id=players_stats.player_id');
+    $req->execute(array($_SESSION['id']));}
+  ?>
+</div>
+<div class="bg-info">
+      <u><b>canon</b></u><br>
+        possédé:
+        <?php
+          $req = $bdd->prepare('SELECT canon FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["canon"]);
+            ?>
+          </p>
+        Coût:<br>
+        - 15 d'industrie<br>
+        - 2 d'énergie
+        
+      <form method="post">
+        <input type="submit" name="button3"
+                class="button" value="test 3" />
+      </form>
+      <?php
+        $a= '<script type="text/javascript">.document.getElementById("button3"); </script>' ;
+        if(isset($a)){
+          $req = $bdd->prepare('UPDATE players_stats SET canon=canon+ 1, industrie=industrie-15, energie=energie-2 WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id']));}
+  ?>
+</div>
+<button class="bg-primary" method="post">
+        <u><b>troupe offensive</b></u><br>
+        possédé:<?php
+          $req = $bdd->prepare('SELECT troupe_offensive FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["troupe_offensive"]);
+            ?>
+          </p>
+        Coût:<br>
+        - 10 d'industrie<br>
+      </button>
+      <button class="bg-primary" method="post">
+        <u><b>troupe logistique</b></u><br>
+        possédé:
+        <?php
+          $req = $bdd->prepare('SELECT troupe_logistique FROM players,players_stats WHERE players.id=players_stats.player_id');
+          $req->execute(array($_SESSION['id'])); 
+          $test = $req->fetch();?>
+          <p>
+            <?php 
+              echo($test["troupe_logistique"]);
+            ?>
+          </p>
+        Coût:<br>
+        - 10 d'industrie<br>
+      </button>
+<!--
     <div class="row">
       <button class="bg-info"  method="post">
         <u><b>Centrale</b></u><br>
