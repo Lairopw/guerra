@@ -64,30 +64,30 @@
     height: 3px;
   }
 </style>
-<script>
-  var infodiv = document.getElementById("info");
-  function setInfo(name, x, y, energie,industrie)
-  {
-    infodiv.innerHTML = name + "                        <br />X: " + x + "                            <br />Y: " + y +"                     <br/> energie:"+energie+"                               <br/> industrie: "+industrie;
-  }
-</script>
+
 <div id="info">
 <?php
-  $req = $bdd->prepare('SELECT pseudo,x_coord,y_coord,color,energie,industrie FROM players,players_stats WHERE players.id=players_stats.player_id');
+  /*$req = $bdd->prepare('SELECT pseudo,x_coord,y_coord,color,energie,industrie FROM players,players_stats WHERE players.id=players_stats.player_id');
   $req->execute(array($_SESSION['id']));
   $data = $req->fetch();
   $pse=$data["pseudo"];
   $x_co=$data["x_coord"];
   $y_co=$data["y_coord"];
   $indu=$data["industrie"];
-  $ener=$data["energie"];?>
+  $ener=$data["energie"];*/?>
   <div >
     <?php
-      echo "pseudo :",$pse,"<br>   X : ", $x_co ," , Y : ", $y_co ,"<br>  industrie : ", $indu ," <br>  energie : ", $ener;
+      #echo "pseudo :",$pse,"<br>   X : ", $x_co ," , Y : ", $y_co ,"<br>  industrie : ", $indu ," <br>  energie : ", $ener;
     ?>
   </div>
 </div>
-
+<script>
+  var infodiv = document.getElementById("info");
+  function setInfo(name, x, y, energie,industrie)
+  {
+    infodiv.innerHTML = name + "<br />X: " + x + "; Y: " + y +"<br/> energie:"+energie+"<br/> industrie: "+industrie;
+  }
+</script>
 <div id="screen-left" class="container">
   <div class="col">
     <div class="row">
@@ -112,10 +112,8 @@
                 class="button" value="test" />
       </form>
       <?php
-      $t= '<script type="text/javascript">.document.getElementById("button1"); </script>' ;
-      if(isset($t)){
         $req = $bdd->prepare('UPDATE players_stats SET crea_indu=crea_indu+ 1, industrie=industrie-200, energie=energie-10 WHERE WHERE players.id=players_stats.player_id');
-        $req->execute(array($_SESSION['id']));}
+        $req->execute(array($_SESSION['id']));
       ?>
 </div>
 <div class="bg-primary">
@@ -139,10 +137,8 @@
                 class="button" value="test 2" />
       </form>
       <?php
-        $te= '<script type="text/javascript">.document.getElementById("button2"); </script>' ;
-        if(isset($te)){
-    $req = $bdd->prepare('UPDATE players_stats SET centrale=centrale+ 1, industrie=industrie-200, energie=energie-10 WHERE players.id=players_stats.player_id');
-    $req->execute(array($_SESSION['id']));}
+          $req = $bdd->prepare('UPDATE players_stats SET centrale=centrale+ 1, industrie=industrie-200, energie=energie-10 WHERE players.id=players_stats.player_id');
+    $req->execute(array($_SESSION['id']));
   ?>
 </div>
 <div class="bg-info">
@@ -166,10 +162,8 @@
                 class="button" value="test 3" />
       </form>
       <?php
-        $a= '<script type="text/javascript">.document.getElementById("button3"); </script>' ;
-        if(isset($a)){
           $req = $bdd->prepare('UPDATE players_stats SET canon=canon+ 1, industrie=industrie-15, energie=energie-2 WHERE players.id=players_stats.player_id');
-          $req->execute(array($_SESSION['id']));}
+          $req->execute(array($_SESSION['id']));
   ?>
 </div>
 <button class="bg-primary" method="post">
@@ -271,14 +265,14 @@
 </div>
 <div id="screen">
   <?php 
-  $req = $bdd->prepare('SELECT pseudo,x_coord,y_coord,color FROM players,players_stats WHERE players.id=players_stats.player_id');
+  $req = $bdd->prepare('SELECT pseudo,x_coord,y_coord,color,industrie,energie FROM players,players_stats WHERE players.id=players_stats.player_id');
   $req->execute(array($_SESSION['id']));
   $data = $req->fetch();
   while($data != false) { ?>
     <div
        class="player_dot"
        style="top: <?=$data['y_coord'] * 3; ?>px; left: <?=$data['x_coord'] * 3; ?>px; background-color: <?=$data['color']; ?>;"
-       onmouseover="setInfo('<?=$data['pseudo']; ?>', <?=$data['x_coord']; ?>, <?=$data['y_coord']; ?>);">
+       onmouseover="setInfo('<?=$data['pseudo']; ?>', <?=$data['x_coord']; ?>, <?=$data['y_coord']; ?>,<?=$data['industrie']; ?>,<?=$data['energie']; ?>);">
     </div>
   <?php $data= $req->fetch();} ?>
 </div>
